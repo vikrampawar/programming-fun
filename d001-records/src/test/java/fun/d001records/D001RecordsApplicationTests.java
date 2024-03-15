@@ -1,13 +1,13 @@
 package fun.d001records;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SpringBootTest
@@ -95,4 +95,28 @@ class D001RecordsApplicationTests
         assertThat(range.start()).isEqualTo(0);
         assertThat(range.end()).isEqualTo(0);
     }
+
+    @Test
+    void testCanonicalConstructor()
+    {
+        var range = new Range(-20, -6);
+        assertThat(range.start()).isEqualTo(0);
+        assertThat(range.end()).isEqualTo(0);
+    }
+
+    @Test
+    void testState()
+    {
+        var cities = new ArrayList<String>();
+        cities.add("Athens");
+        cities.add("Augusta");
+        State state = new State("Georgia", "Atlanta", cities);
+        System.out.println(state);
+        assertThat(state.toString()).isEqualTo("State[name=Georgia, capital=Atlanta, cities=[Athens, Augusta]]");
+
+        // cities is modifiable
+        state.cities().add("Alpharetta");
+        assertThat(state.toString()).isEqualTo("State[name=Georgia, capital=Atlanta, cities=[Athens, Augusta, Alpharetta]]");
+    }
+
 }
